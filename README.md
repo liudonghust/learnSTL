@@ -1,6 +1,6 @@
-rnSTL
+learnSTL
 
-implement some basic components of STL based of C++11 when learning C++ generic programming and STL. reference to libc++, delete some relatively complicated part, and also add some useful data structure.
+implement some basic components of STL based on C++11 when learning C++ generic programming and STL. Reference to libc++, delete some relatively complicated part, and also add some useful data structure.
 
 **Complier**: clang++3.8.0 and above.
 
@@ -41,6 +41,7 @@ implement some basic components of STL based of C++11 when learning C++ generic 
         - [x] is_partition, partition, partition_copy, partition_pointer, stable_partition
         - [x] is_permutation, next_permutation, prev_permutation
     - [ ] *sorting*
+    - [ ] *shuffle*
     - [x] *set (sorted)*
         - [x] merge
         - [x] set_union, set_intersection, set_difference, set_symmetric_difference
