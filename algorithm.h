@@ -1953,7 +1953,7 @@ namespace learnSTL{
             while(first1 != last1 && first2 != last2){
                 // if f1 == f2, first merge f1, then f2.
                 if(comp(*first2, *first1)){   // for stable, compare f2 < f1
-                    *result = *frist2;
+                    *result = *first2;
                     ++result;
                     ++first2;
                 }
@@ -1964,9 +1964,10 @@ namespace learnSTL{
                 }
             }
             if(first1 != last1)
-               return copy(first1, last1, result);
+                return copy(first1, last1, result);
             if(first2 != last2)
                 return copy(first2, last2, result);
+            return result;
         }
 
     template<typename InputIter1, typename InputIter2, typename OutputIter> inline
@@ -1979,7 +1980,136 @@ namespace learnSTL{
 
     // inplace_merge
     
+    ///~ ---------------------------------- end merge ----------------------------------------
+    //
+    //
+    ///: --------------------------------- set sorted -------------------------------------------
+    // set_union
+    template<typename InputIter1, typename InputIter2, typename OutputIter, typename Compare> inline
+        OutputIter set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result, Compare comp)
+        {
+            while(first1 != last1 && first2 != last2){
+                if(comp(*first2, *first1)){ // if e2 < e1
+                    *result = *first2;
+                    ++first2;
+                    ++result;
+                }
+                else{                      // if e1 <= e2
+                    *result = *first1;
+                    ++result;
+                    if(!comp(*first1, *first2))   // e1 == e2
+                        ++first2;
+                    ++first1;
+                }
+            }
+            if(first1 != last1)
+                return copy(first1, last1, result);
+            if(first2 != last2)
+                return copy(first2, last2, result);
+            return result;
+        }
+
+    template<typename InputIter1, typename InputIter2, typename OutputIter> inline
+        OutputIter set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result)
+        {
+            typedef typename iterator_traits<InputIter1>::value_type v1;
+            typedef typename iterator_traits<InputIter2>::value_type v2;
+            return set_union(first1, last1, first2, last2, result, __less<v1, v2>());
+        }
  
+    // set_intersection
+    template<typename InputIter1, typename InputIter2, typename OutputIter, typename Compare> inline
+        OutputIter set_intersection(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result, Compare comp)
+        {
+            while(first1 != last1 && first2 != last2)
+            {
+                if(comp(*first2, *first1))     // e2 < e1
+                    ++first2;
+                else if(comp(*first1, *first2))  // e1 < e2
+                    ++first1;
+                else{                       // e1 == e2
+                    *result = *first1;
+                    ++result;
+                    ++first1;
+                    ++first2;
+                }
+            }
+            return result;
+        }
+
+    template<typename InputIter1, typename InputIter2, typename OutputIter> inline
+        OutputIter set_intersection(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result)
+        {
+            typedef typename iterator_traits<InputIter1>::value_type v1;
+            typedef typename iterator_traits<InputIter2>::value_type v2;
+            return set_intersection(first1, last1, first2, last2, result, __less<v1, v2>());
+        }
+
+    // set_difference
+    template<typename InputIter1, typename InputIter2, typename OutputIter, typename Compare> inline
+        OutputIter set_difference(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result, Compare comp)
+        {
+            while(first1 != last1){
+                if(first2 == last2)
+                    return copy(first1, last1, result);
+                if(comp(*first1, *first2)){
+                    *result = *first1;
+                    ++result;
+                    ++first1;
+                }
+                else{
+                    if(!comp(*first2, *first1))    // e1 == e2
+                        ++first1;
+                    ++first2;
+                }
+            }
+            return result;
+        }
+
+    template<typename InputIter1, typename InputIter2, typename OutputIter> inline
+        OutputIter set_difference(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result)
+        {
+            typedef typename iterator_traits<InputIter1>::value_type v1;
+            typedef typename iterator_traits<InputIter2>::value_type v2;
+            return set_difference(first1, last1, first2, last2, result, __less<v1, v2>());
+        }
+    
+    // set_symmetric_difference
+    template<typename InputIter1, typename InputIter2, typename OutputIter, typename Compare> inline
+        OutputIter set_symmetric_difference(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result, Compare comp)
+        {
+            while(first1 != last1 && first2 != last2){
+                if(comp(*first1, *first2)){
+                    *result = *first1;
+                    ++result;
+                    ++first1;
+                }
+                else if(comp(*first2, *first1)){
+                    *result = *first2;
+                    ++result;
+                    ++first2;
+                }
+                else{
+                    ++first1;
+                    ++first2;
+                }
+            }
+            if(first1 != last1)
+                return copy(first1, last1, result);
+            if(first2 != last2)
+                return copy(first2, last2, result);
+            return result;
+        }
+
+    template<typename InputIter1, typename InputIter2, typename OutputIter> inline
+        OutputIter set_symmetric_difference(InputIter1 first1, InputIter1 last1, InputIter2 first2, InputIter2 last2, OutputIter result)
+        {
+            typedef typename iterator_traits<InputIter1>::value_type v1;
+            typedef typename iterator_traits<InputIter2>::value_type v2;
+            return set_symmetric_difference(first1, last1, first2, last2, result, __less<v1, v2>());
+        }
+
+    ///~ ---------------------------------- end set sorted -----------------------------------------
 }
 
 #endif
