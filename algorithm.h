@@ -4,7 +4,7 @@
 #include <cstring>
 #include <type_traits>
 #include <initializer_list>
-#include <utility>
+#include "utility.h"
 #include "iterator.h"
 
 namespace learnSTL{
@@ -319,15 +319,6 @@ namespace learnSTL{
 			*first = gen();
 		return first;
 	}
-
-	//iota      //move to numeric
-	template<typename ForwardIter, typename T> inline
-		void iota(ForwardIter first, ForwardIter last, const T& startVal)
-	{
-		size_t i = 0;
-		for (; first != last; ++first, ++i)
-			*first = (startVal + i);
-	}
 	///~ ------------------------ end copy move and assignment -----------------
 	
 
@@ -390,31 +381,6 @@ namespace learnSTL{
 		return result;
 	}
 
-	//swap  <utility>
-	template<typename T> inline
-		typename std::enable_if<std::is_move_constructible<T>::value &&
-		std::is_move_assignable<T>::value,
-		void>::type
-		swap(T& x, T& y)
-	{
-		T temp(std::move(x));
-		x = std::move(y);
-		y = std::move(temp);
-	}
-
-	// swap array  <utility>
-	template<typename T, size_t N> inline
-		void swap(T(&a)[N], T(&b)[N])
-	{
-		swap_ranges(a, a + N, b);
-	}
-
-	// iter_swap  <utility>
-	template<typename ForwardIter1, typename ForwardIter2> inline
-		void iter_swap(ForwardIter1 iter1, ForwardIter2 iter2)
-	{
-		swap(*iter1, *iter2);
-	}
 	///~ ------------------------- end swap ------------------------------------
 
 

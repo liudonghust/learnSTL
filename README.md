@@ -11,7 +11,11 @@ implement some basic components of STL based on C++11 when learning C++ generic 
 - [x] **iterator**
     - [x] iterator_traits
     - [x] iterator adaptor
-- [ ] **utility**
+- [x] **utility**
+    - [x] swap, swap_ranges, iter_swap
+    - [x] move, forward
+    - [x] rel_ops
+    - [x] pair, make_pair
 - [ ] **algorithm**
     - [x] swap_ranges, for_each
     - [x] *range compare*
@@ -45,8 +49,12 @@ implement some basic components of STL based on C++11 when learning C++ generic 
     - [x] *set (sorted)*
         - [x] merge
         - [x] set_union, set_intersection, set_difference, set_symmetric_difference
+- [x] numeric
+    - [x] iota
+    - [x] accumulate, inner_product
+    - [x] partial_sum, adjacent_difference
 - [ ] **container**
-   - [x] array
+   - [ ] array
    - [x] vector
    - [ ] deque
    - [ ] forward_list

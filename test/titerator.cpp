@@ -197,7 +197,6 @@ void test_ostreamit()
     ostr.freeze(false);
 }
 
-/*
 int main(int argc, char *argv[])
 {
     test_prop();
@@ -205,4 +204,3 @@ int main(int argc, char *argv[])
     std::cout << "SUCCESS testing <iterator>" << std::endl;
     return 0;
 }
-*/
