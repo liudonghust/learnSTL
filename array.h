@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <initializer_list>
 #include <type_traits>
-#include <tuple>
+#include "tuple.h"
 #include "iterator.h"
 #include "algorithm.h"
 
@@ -117,6 +117,37 @@ namespace learnSTL{
 	{
 		a1.swap(a2);
 	}
+
+    // tuple-like interface
+    // tuple_size
+    template<typename T, size_t N>
+        class tuple_size<array<T, N>> : public std::integral_constant<size_t, N> {};
+
+    // tuple_element
+    template<size_t Index, typename T, size_t N>
+        class tuple_element<Index, array<T, N>>{
+        public:
+            using type = T;
+        };
+
+    // get
+    template<size_t Index, typename T, size_t N>
+       constexpr T& get(array<T, N>& a){
+           static_assert(Index < N, "Index out of range in get<> (array)");
+           return a[Index];
+       }
+
+    template<size_t Index, typename T, size_t N>
+        constexpr T&& get(array<T, N>&& ra){
+            static_assert(Index < N, "Index out of range in get<> (array)");
+            return move(ra[Index]);
+        }
+
+    template<size_t Index, typename T, size_t N>
+        constexpr const T& get(const array<T, N>& a){
+            static_assert(Index < N, "Index out of range in get<> (array)");
+            return a[Index];
+        }
 }
  
 #endif

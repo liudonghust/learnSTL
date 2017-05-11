@@ -1,5 +1,5 @@
 #include <initializer_list>
-#include <tuple>
+#include "tuple.h"
 #include <cstddef>
 #include <type_traits>
 
@@ -175,7 +175,7 @@ namespace learnSTL{
             p1.swap(p2);
         }
    
-    // __V1, just for return type of make_pair
+    // just for return type of make_pair
     template<typename T>
         struct __make_pair_return{
             typedef T type;
@@ -196,5 +196,74 @@ namespace learnSTL{
                          typename __make_pair_return<typename std::decay<T2>::type>::type>
                         (learnSTL::forward<T1>(rv1), learnSTL::forward<T2>(rv2));
         }
+    
+    // tuple-like interface
+    // tuple_size
+    template<typename T1, typename T2>
+        class tuple_size<pair<T1, T2>> : public std::integral_constant<size_t, 2> {};
 
+    
+    // tuple_element
+    template<typename T1, typename T2>
+        class tuple_element<0, pair<T1, T2>>{
+        public:
+            using type = T1;
+        };
+
+    template<typename T1, typename T2>
+        class tuple_element<1, pair<T1, T2>>{
+        public:
+            using type = T2;
+        };
+
+    // get
+    template<size_t> struct __get_pair;
+
+    template<> struct __get_pair<0>{
+        template<typename T1, typename T2>
+            static T1& get(pair<T1, T2>& p){
+                return p.first;
+            }
+        template<typename T1, typename T2>
+            static const T1& get(const pair<T1, T2>& p){
+                return p.first;
+            }
+        template<typename T1, typename T2>
+            static T1&& get(pair<T1, T2>&& p){
+                return forward<T1>(p.first);
+            }
+    };
+
+    template<> struct __get_pair<1>{
+        template<typename T1, typename T2>
+            static T2& get(pair<T1, T2>& p){
+                return p.second;
+            }
+        template<typename T1, typename T2>
+            static const T2& get(const pair<T1, T2>& p){
+                return p.second;
+            }
+        template<typename T1, typename T2>
+            static T2&& get(pair<T1, T2>&& p){
+                return forward<T2>(p.second);
+            }
+    };
+
+    template<size_t Index, typename T1, typename T2> inline
+        typename tuple_element<Index, pair<T1, T2>>::type&
+        get(pair<T1, T2>& p){
+            return __get_pair<Index>::get(p);
+        }
+
+    template<size_t Index, typename T1, typename T2> inline
+        typename tuple_element<Index, pair<T1, T2>>::type const&
+        get(const pair<T1, T2>& p){
+            return __get_pair<Index>::get(p);
+        }
+
+    template<size_t Index, typename T1, typename T2> inline
+        typename tuple_element<Index, pair<T1, T2>>::typel&&
+        get(pair<T1, T2>&& p){
+            return __get_pair<Index>::get(learnSTL::move(p));
+        }
 }

@@ -16,6 +16,10 @@ implement some basic components of STL based on C++11 when learning C++ generic 
     - [x] move, forward
     - [x] rel_ops
     - [x] pair, make_pair
+- [x] **tuple**
+    - [x] tuple
+    - [x] tuple_size, tuple_element, get
+    - [x] make_tuple, tie, forward_as_tuple, ignore
 - [ ] **algorithm**
     - [x] swap_ranges, for_each
     - [x] *range compare*
@@ -54,7 +58,7 @@ implement some basic components of STL based on C++11 when learning C++ generic 
     - [x] accumulate, inner_product
     - [x] partial_sum, adjacent_difference
 - [ ] **container**
-   - [ ] array
+   - [x] array
    - [x] vector
    - [ ] deque
    - [ ] forward_list
