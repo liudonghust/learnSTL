@@ -1,6 +1,7 @@
 #include <iostream>
 #include <functional>
 #include <cassert>
+#include <cstring>
 #include "../utility.h"
 using namespace std;
 

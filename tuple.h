@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <type_traits>
+#include "xtuple.h"
 #include "utility.h"
 
 namespace learnSTL{
@@ -71,10 +72,10 @@ namespace learnSTL{
 
             //constructor from pair
             template<typename T1, typename T2>
-                tuple(const pair<T1, T2>& p) : base(tuple<T2>(p.second)), __value(p.first) {}
+                tuple(const learnSTL::pair<T1, T2>& p) : base(tuple<T2>(p.second)), __value(p.first) {}
 
             template<typename T1, typename T2>
-                tuple(pair<T1, T2>&& rp)
+                tuple(learnSTL::pair<T1, T2>&& rp)
                     : base(tuple<T2>(learnSTL::forward<T2>(rp.second))),
                       __value(learnSTL::forward<T1>(rp.first))
             {}
@@ -152,7 +153,7 @@ namespace learnSTL{
         }
 
     // tuple_size
-    template<typename Tuple> class tuple_size;  
+    //template<typename Tuple> class tuple_size;  
 
     template<typename...Types>
         class tuple_size<tuple<Types...> >
@@ -171,7 +172,7 @@ namespace learnSTL{
 
 
     // tuple_element
-    template<size_t Index, typename Tuple> class tuple_element;   // gerneral template
+    //template<size_t Index, typename Tuple> class tuple_element;   // gerneral template
 
     template<typename First, typename...Rest>
         class tuple_element<0, tuple<First, Rest...> >        // special

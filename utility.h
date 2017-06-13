@@ -1,7 +1,10 @@
+#ifndef MY_UTILITY_H
+#define MY_UTILITY_H
+
 #include <initializer_list>
-#include "tuple.h"
 #include <cstddef>
 #include <type_traits>
+#include "xtuple.h"
 
 namespace learnSTL{
     // ------------------ support for rvalue and move semantic -----------
@@ -27,7 +30,7 @@ namespace learnSTL{
             typedef typename std::remove_reference<T>::type UnRef;
             return static_cast<UnRef&&>(t);
         }
-    
+
     // ---------------------- generic swap ---------------------------------
 	//swap  
 	template<typename T> inline
@@ -267,3 +270,5 @@ namespace learnSTL{
             return __get_pair<Index>::get(learnSTL::move(p));
         }
 }
+
+#endif
